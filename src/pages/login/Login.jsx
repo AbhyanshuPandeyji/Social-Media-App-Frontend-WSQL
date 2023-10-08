@@ -11,7 +11,7 @@ const Login = () => {
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                         Corporis saepe et eum eveniet repudiandae voluptas, commodi
                         rerum vitae officia minus incidunt quo, iure consectetur
-                        vero eaque, accusantium repellat? Perspiciatis, officia!
+                        vero eaque, accusantium repellat? Perspiciatis,  officia!
                     </p>
                     <span>Do You have and account?</span>
                     <button>Register</button>
