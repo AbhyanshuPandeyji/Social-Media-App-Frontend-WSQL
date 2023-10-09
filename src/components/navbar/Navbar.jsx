@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 // style import
 import './navbar.scss'
+import '../../style.scss'
 
 // icons import 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
