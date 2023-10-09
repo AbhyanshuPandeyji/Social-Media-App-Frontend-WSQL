@@ -3,7 +3,8 @@ import { createBrowserRouter , RouterProvider , Route, Outlet, Navigate } from '
 
 
 
-import './App.css';
+// import './App.css';
+import './style.scss'
 
 
 // Component import 
@@ -28,7 +29,8 @@ function App() {
 
   const Layout = ()=>{
     return(
-      <div>
+      // to change the background to dark or light , and it will change our text and different things
+      <div className='theme-dark'>
         <Navbar/>
         <div style={{display: "flex"}}>
           <LeftBar/>
