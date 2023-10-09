@@ -1,11 +1,16 @@
+// $themes - as an variable with - light and dark nested variable in it
+// in sass we can nest the css variable and in those we can have a inside function like variable which will return
+// the different key value pairs - it looks much different than css
+
 $themes:(
     light:(
         textColor: #000,
         bg: white,
         logo: darkblue,
         bgSoft: #f6f3f3, 
-        textColorSoft: #555
-        // border: lightgray,
+        textColorSoft: #555,
+        // border still has errors stupid mistake didn't have the comma in place
+        border: lightgray,
     ),
     dark:(
         textColor: whitesmoke,
@@ -13,10 +18,14 @@ $themes:(
         logo: white,
         bgSoft: #333, 
         textColorSoft: lightgray,
-        // border: #444,
+        border: #444,
     ),
 );
 
+
+// @mixin - a predefined sass name
+// themify - works as a function
+// using $themes in this function as an variable , and utilizing it as to map over and work with it
 @mixin themify($themes) {
     @each $theme, $map in $themes {
       .theme-#{$theme} & {
