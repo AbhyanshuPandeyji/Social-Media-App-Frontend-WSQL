@@ -18,6 +18,12 @@ import MoreVertIcon from "@mui/icons-material/MoreVert"
 import {AuthContext} from '../../context/authContext.js'
 
 
+
+// components
+import Posts from '../../components/posts/Posts.jsx'
+
+
+
 const Profile = () => {
 
 
@@ -30,8 +36,8 @@ const Profile = () => {
             <div class="container">
                 <div className="images">
                     {/* one background image  */}
-                    <img src="https://images.pexels.com/photos/884788/pexels-photo-884788.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="cover"/> {/* one profile image */}
-                    <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="profilePic"/>
+                    <img src="https://images.pexels.com/photos/884788/pexels-photo-884788.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className='cover' alt="cover"/> {/* one profile image */}
+                    <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className="profilePic" alt="profilePic"/>
                 </div>
                 <div className="profileContainer">
                   <div className="uInfo">
@@ -55,21 +61,27 @@ const Profile = () => {
                     <div className="center">
                       {/* <span>{currentUser.name}</span> */}
                       <span>Jane Doe</span>
-                      <div className="item">
-                        <PlaceIcon />
-                        <span>USA</span>
+                      <div className="info">
+                        <div className="item">
+                          <PlaceIcon />
+                          <span>USA</span>
+                        </div>
+                        <div className="item">
+                          <LanguageIcon />
+                          <span>Abhy,Dev</span>
+                          </div>
+                        </div>
+                        <button>Follow</button>
                       </div>
-                      <div className="item">
-                        <LanguageIcon />
-                        <span>Abhy,Dev</span>
-                      </div>
-                      <button>Follow</button>
-                    </div>
                     <div className="right">
                         <EmailOutlinedIcon/>
                         <MoreVertIcon/> 
                     </div>
                   </div>
+                  {/* you can either use it inside this profile container to utilize its padding or
+                   you can create your self global padding what ever suits you  */}
+                  {/* try to create the styling with the global variables where you can to minimize the css files  */}
+                <Posts/>
                 </div>
             </div>
         </div>

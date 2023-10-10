@@ -40,6 +40,11 @@
           width: 20rem;
           background-color: transparent;
           color: themed('textColor');
+
+          @include mobile{
+            display: none;
+          }
+
         }
       }
     }
@@ -48,6 +53,10 @@
       display: flex;
       align-items: center;
       gap: 20px;
+      
+      @include mobile{
+        display: none;
+      }
 
       .user {
         display: flex;

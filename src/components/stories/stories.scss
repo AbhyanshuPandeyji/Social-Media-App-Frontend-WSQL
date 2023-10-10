@@ -1,11 +1,42 @@
 // we are not going to use style.scss in the main source folder which includes our dark mode ,
 // because it doesn't include any thing other than images
 
+@import '../../style.scss';
+
+
 .stories{
     display: flex;
     gap: 10px;
     height: 250px;
     margin-bottom: 30px;
+
+    // working with scss variables , just pass in the value it will calculate in the main style file and give back the result
+    // as here we are taking in the one function from it , mobile
+    // in that there is an css styling , which hold the media query , where we can use different screen size
+    // then there is content or the styling we want , as this is just taking one argument which is the direct style value- 
+    // but you can pass only one the amount of things define in the scss function - using mixin
+
+    // it works as mixin - to define the function , then function name , then the arguments if any in brackets , 
+    // then then curly braces where we do the calculation , take the data in , and work as it is a function , but only for the css
+    /* mixin function_Name(arg if any otherwise leave it ){
+        // calculation / predefined set of operations / value intake
+    } */
+
+    // and where ever you want to include it 
+    // - first use the import to have the scss file in the another scss file
+    // - second use the function and pass in the data - include to include the function
+    // - third - use the function in the file - bay passing in the data 
+    // if using the arguments too - then you can use the function name , then the braces the argument name , 
+    // and then wrap the inside styling in it to use it . it works almost same as functions
+    
+    @include mobile{
+        height: 50px;
+        justify-content: space-between;    
+    }
+
+
+    
+
     // its a div
     .story{
         // so every story should contain same amount of space on the page
@@ -14,6 +45,16 @@
         // give overflow hidden so image utilize the border radius
         overflow: hidden;
         position: relative;
+
+        @include mobile{
+            // to have the stories for the mobile like in circle like in instagram ,
+            // than to have it like the rectangle as youtube stories
+            flex: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+          }
+    
 
         img{
             width: 100%;
@@ -27,6 +68,11 @@
             left: 10px;
             color: white;
             font-weight: 500;
+
+            @include mobile{
+                display: none;
+            }
+
         }
 
 
@@ -46,6 +92,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
+            @include mobile{
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+            }
 
         }
     }
