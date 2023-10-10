@@ -40,6 +40,7 @@ const Profile = () => {
                     <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className="profilePic" alt="profilePic"/>
                 </div>
                 <div className="profileContainer">
+
                   <div className="uInfo">
                     <div className="left">
                       <a href='http://facebook.com'>

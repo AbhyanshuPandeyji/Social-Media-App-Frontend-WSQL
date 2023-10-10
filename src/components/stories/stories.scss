@@ -35,6 +35,12 @@
     }
 
 
+    @include tablet{
+        height: 150px;
+        gap: 12px;
+    }
+
+
     
 
     // its a div
