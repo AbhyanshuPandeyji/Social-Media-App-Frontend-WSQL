@@ -17,6 +17,9 @@ import Login from "./pages/login/Login.jsx"
 import Register from './pages/register/Register';
 import Home from "./pages/home/Home.jsx";
 import Profile from './pages/profile/Profile.jsx'
+import { useContext } from 'react';
+import { DarkModeContext } from './context/darkModeContext';
+import { AuthContext } from './context/authContext';
 
 
 
@@ -25,12 +28,19 @@ import Profile from './pages/profile/Profile.jsx'
 
 function App() {
 
+  // const {currentUser} = useContext(AuthContext);
   const currentUser = true;
+
+  // using context api - instead of use state hook to have it work where we want instead of one location specific
+  const { darkMode } = useContext(DarkModeContext);
+
+  console.log(darkMode)
+
 
   const Layout = ()=>{
     return(
       // to change the background to dark or light , and it will change our text and different things
-      <div className='theme-dark'>
+      <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
         <Navbar/>
         <div style={{display: "flex"}}>
           <LeftBar/>
