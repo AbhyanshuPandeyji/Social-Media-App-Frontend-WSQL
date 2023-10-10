@@ -1,0 +1,86 @@
+@import "../../style.scss";
+
+.post {
+  @include themify($themes) {
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    border-radius: 20px;
+
+    // for to change the color of the posts on the dark and light mode
+    // not done with the posts , because its image and text above it , so it will be same 
+    // maybe later i can design to what color of the text show on the post image and what kind of color in the image
+    // like bigger apps where you can post images with text and edit it
+    background-color: themed('bg');
+    color: themed('textColor');
+    
+    .container {
+      padding: 20px;
+
+      .user {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        .userInfo {
+          display: flex;
+          gap: 20px;
+
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .details {
+            display: flex;
+            flex-direction: column;
+
+            .name {
+              font-weight: 500;
+            }
+
+            .date {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+
+      // content of our posts - image or text , what if there only text or only image , how it will work
+      .content {
+
+        margin: 20px 0px;
+
+        img{
+            // maybe can also design the how much image to who , or crop feature, to not let image to be cutout
+            // write all the feature you want to build in a paper , and in readme file
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+      }
+
+      .info {
+
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .item{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+
+            
+        }
+
+
+      }
+    }
+  }
+}
