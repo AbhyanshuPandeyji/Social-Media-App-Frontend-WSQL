@@ -49,8 +49,14 @@ $themes:(
     @return map-get($theme-map, $key);
   }
   
-  @mixin mobile {
+
+
+// fro responsive design , we use this , rather than the index js global styling
+// the upper ones work as variable to hold the value and to provide the access when imported  
+// mobile and tablet act as a function , as themify worked before 
+@mixin mobile {
     @media (max-width: 480px) {
+      // content takes the value of the css - coming from the different file and giving back the response to them , after evaluating the result
       @content;
     }
   }
