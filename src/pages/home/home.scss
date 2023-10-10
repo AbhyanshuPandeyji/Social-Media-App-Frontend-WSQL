@@ -4,9 +4,17 @@
     @include themify($themes){
         background-color: themed('bgSoft');
         padding: 20px 70px ; 
+        
+        // the padding should be applied within the theme so it can be applied to home page content
+        @include mobile{
+            padding: 10px;
+        }
+
+        @include tablet{
+            padding: 20px;
+        }
+    
+    
     }
 
-    @include mobile{
-        padding: 10px;
-      }
 }

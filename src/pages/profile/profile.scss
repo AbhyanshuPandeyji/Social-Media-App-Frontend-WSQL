@@ -36,7 +36,16 @@
             .profileContainer{
                 // same as home page to keep things into aligned
                 padding: 20px 70px;
+                background-color: themed('bgSoft');
 
+                @include mobile{
+                    padding: 10px;       
+                }
+
+
+                @include tablet{
+                    padding: 30px;
+                }
 
                 // height of the box that contain info about the user ,and links to his different ids
                 .uInfo{
@@ -57,6 +66,17 @@
                     justify-content: space-between;
 
                     margin-bottom: 20px;
+
+                    @include mobile{
+                        flex-direction: column;
+                        height: 40vh;
+                        padding: 20px;
+                        margin-top: 100px;
+                    }  
+
+                    @include tablet {
+                        height: 30vh;
+                    }
                     
                     .left{
                         flex: 1;
@@ -66,6 +86,11 @@
                         a{
                             color: themed('textColorSoft');
                         }
+
+                        @include tablet {
+                            flex-wrap: wrap;
+                        }
+
                     }
 
                     .center{
@@ -85,6 +110,10 @@
                             align-items: center;
                             justify-content: space-around;
                             width: 100%;
+
+                            @include mobile {
+                                gap: 10px;
+                            }
 
                             .item{
                                 display: flex;
@@ -125,26 +154,6 @@
                 
             }
             
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
     }
