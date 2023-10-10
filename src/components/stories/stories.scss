@@ -1,0 +1,52 @@
+// we are not going to use style.scss in the main source folder which includes our dark mode ,
+// because it doesn't include any thing other than images
+
+.stories{
+    display: flex;
+    gap: 10px;
+    height: 250px;
+    margin-bottom: 30px;
+    // its a div
+    .story{
+        // so every story should contain same amount of space on the page
+        flex: 1;
+        border-radius: 10px;
+        // give overflow hidden so image utilize the border radius
+        overflow: hidden;
+        position: relative;
+
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        span{
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            font-weight: 500;
+        }
+
+
+        button{
+            position: absolute;
+            bottom: 40px;
+            left: 10px;
+            color: white;
+            background-color:#5271ff ;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+    }
+}
