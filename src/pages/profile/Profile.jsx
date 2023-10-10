@@ -54,7 +54,7 @@ const Profile = () => {
                       <a href='http://pinterest.com'>
                         <Pinterest fontSize='large'/>
                       </a>
-                      <a href='http://Twitter.com'>
+                      <a href='http://twitter.com'>
                         <Twitter fontSize='large'/>
                       </a>
                     </div>
