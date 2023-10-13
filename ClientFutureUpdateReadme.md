@@ -13,6 +13,7 @@
 
 > Things other than base project
 >> - including the redux tool kit
+>> - redux can be implemented , the dispatch , store , reducer , and action file , data base doesn't matter , but need to know what to intake and how to intake while making request
 >> - using mongodb instead of mysql
 >> multiple pages to the ui
 >> multiple functionality other than just app - like many others ads , etc

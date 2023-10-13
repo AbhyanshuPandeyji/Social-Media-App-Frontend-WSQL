@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
 
@@ -8,21 +9,32 @@ export const AuthContextProvider = ({children}) =>{
 
     const[currentUser , setCurrentUser ]  = useState(
         // json.parse - to transform string into object
-        JSON.parse(localStorage.getItem('user') || null )
+        JSON.parse(localStorage.getItem('user')) || null
+        // null is after the getting item , not inside it , 
+        // remember how or work even if first condition is true if the second one is then it will set it to that value
     );
 
 
-    const login = () =>{
+    const login =  async (inputs) =>{
         // TO DO - it will be done by api
         // api return our user info
         // then set our current user 
 
         // dummy function to have the user not null
-        setCurrentUser({
-            id:1 , 
-            name: "John Doe" , 
-            profilePic : "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        // setCurrentUser({
+        //     id:1 , 
+        //     name: "John Doe" , 
+        //     profilePic : "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        // });
+
+        // actual data 
+        const res = await axios.post("http://localhost:8800/api/auth/login" , inputs , {
+            // because we are working with cookies if we don't use it we can encounter problems    
+        withCredentials: true,
         });
+
+
+        setCurrentUser(res.data);
     };
 
 

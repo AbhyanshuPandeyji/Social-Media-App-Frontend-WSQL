@@ -1,8 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './register.scss'
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 const Register = () => {
+
+  const [ inputs , setInputs ] = useState({
+    username : "",
+    email: "",
+    password:"",
+    name : "",
+  });
+
+
+  const [err , setErr] = useState(null) 
+
+  // on change to change the value of the input - on change method
+  const handleChange = (e) =>{
+    setInputs((prev)=>({
+      // taking previous value , targeting the name and 
+      // the value associated with the box , and changing value
+      ...prev , [e.target.name] : e.target.value
+    }));
+  };
+
+  // console.log(inputs);
+
+
+  // what will happen after the value has been changed - on click method
+  // make a register request on click 
+  const handleClick = async (e) =>{
+
+    e.preventDefault()
+
+    try {
+      // hitting the url and sending this data of the inputs
+      await axios.post("http://localhost:8800/api/auth/register" , inputs);
+    } catch (err) {
+      // this will help us to get our message data from the backend
+      // but how they are linking it , what is response , and what is data
+      setErr(err.response.data);
+    }
+  }
+
+  // console.log(err);
+
   return (
     <div className='register'>
             <div className='card'>
@@ -22,11 +64,14 @@ const Register = () => {
                 <div className='right'>
                   <h1>Register</h1>
                   <form>
-                    <input type="text" placeholder='Username' />
-                    <input type='password' placeholder='Password'/> 
-                    <input type='email' placeholder='Email'/> 
-                    <input type='text' placeholder='Name'/> 
-                    <button>Register</button>
+                    {/* // naming matter in the form because that how it will send data into backend and that how it will set the data , 
+                    and you have problem accessing it if you set wrong name to specify the input field */}
+                    <input type="text" placeholder='Username' name="username" onChange={handleChange} />
+                    <input type='email' placeholder='Email' name="email" onChange={handleChange} /> 
+                    <input type='password' placeholder='Password' name="password" onChange={handleChange} /> 
+                    <input type='text' placeholder='Name' name="name" onChange={handleChange} /> 
+                    {err && err}
+                    <button onClick={handleClick}>Register</button>
                   </form>
                 </div>
             </div>
