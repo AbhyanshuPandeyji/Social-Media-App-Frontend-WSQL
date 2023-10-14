@@ -1,5 +1,6 @@
 // packages import
 import { createBrowserRouter , RouterProvider , Route, Outlet, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 
 
@@ -37,9 +38,15 @@ function App() {
   console.log(darkMode)
 
 
+  const queryClient = new QueryClient()
+
   const Layout = ()=>{
     return(
-      // to change the background to dark or light , and it will change our text and different things
+      // this is to work with react query - for fetching data and working with api request more efficiently than use effect and redux
+      // but works generally for if you are ok with api request in single files - because it will still have the all the fetched data into
+      // all component because we wrapped app into it 
+      <QueryClientProvider client={queryClient}>
+      {/* // to change the background to dark or light , and it will change our text and different things */}
       <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
         <Navbar/>
         <div style={{display: "flex"}}>
@@ -50,6 +57,7 @@ function App() {
           <RightBar/>
         </div>
       </div>
+      </QueryClientProvider>
 
     )
 
