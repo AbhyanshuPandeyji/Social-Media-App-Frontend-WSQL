@@ -21,6 +21,17 @@ const Share = () => {
     const [desc, setDesc] = useState("")
 
 
+    const upload = async () => {
+        try {
+            const formData = new FormData();
+            formData.append("file", file)
+            const res = await makeRequest.post("/upload", formData);
+            return res.data;
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     // adding data and fetching data using react query
     const mutation = useMutation((newPost) => {
         return makeRequest.post('/posts', newPost);
@@ -30,10 +41,22 @@ const Share = () => {
         }
     })
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
+
+        // to upload image - to see the image we will go to posts
+        let imgUrl = "";
+
+        if (file) 
+            imgUrl = await upload();
+        
+
+
         // we will use react-query use mutation for creating our post requests
-        mutation.mutate({desc})
+        mutation.mutate({desc, img: imgUrl});
+
+        setDesc(null);
+        setFile(null);
 
     }
 
@@ -41,19 +64,30 @@ const Share = () => {
         <div className="share">
             <div className="container">
                 <div className="top">
-                    <img src={
-                            currentUser.profilePic
-                        }
-                        alt=""/>
-                    <input type="text"
-                        placeholder={
-                            `What's on your mind ${
-                                currentUser.name
-                            }?`
-                        }
-                        onChange={
-                            (e) => setDesc(e.target.value)
-                        }/>
+                    <div className="left">
+
+                        <img src={
+                                currentUser.profilePic
+                            }
+                            alt=""/>
+                        <input type="text"
+                            placeholder={
+                                `What's on your mind ${
+                                    currentUser.name
+                                }?`
+                            }
+                            onChange={
+                                (e) => setDesc(e.target.value)
+                            }
+                            value={desc}/>
+                    </div>
+                    <div className="right">
+                        {
+                        file && <img className="file" alt=""
+                            src={
+                                URL.createObjectURL(file)
+                            }/>
+                    } </div>
                 </div>
                 <hr/>
                 <div className="bottom">
