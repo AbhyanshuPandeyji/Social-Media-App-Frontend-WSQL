@@ -66,10 +66,10 @@ const Share = () => {
                 <div className="top">
                     <div className="left">
 
-                        <img src={
+                        {/* <img src={
                                 currentUser.profilePic
                             }
-                            alt=""/>
+                            alt=""/> */}
                         <input type="text"
                             placeholder={
                                 `What's on your mind ${

@@ -31,16 +31,16 @@ const Register = () => {
   // make a register request on click 
   const handleClick = async (e) =>{
 
-    e.preventDefault()
+    // e.preventDefault()
 
-    try {
-      // hitting the url and sending this data of the inputs
-      await axios.post("http://localhost:8800/api/auth/register" , inputs);
-    } catch (err) {
-      // this will help us to get our message data from the backend
-      // but how they are linking it , what is response , and what is data
-      setErr(err.response.data);
-    }
+    // try {
+    //   // hitting the url and sending this data of the inputs
+    //   await axios.post("http://localhost:8800/api/auth/register" , inputs);
+    // } catch (err) {
+    //   // this will help us to get our message data from the backend
+    //   // but how they are linking it , what is response , and what is data
+    //   setErr(err.response.data);
+    // }
   }
 
   // console.log(err);
