@@ -6,7 +6,7 @@ import {useContext, useState} from "react";
 import {AuthContext} from "../../context/authContext";
 
 
-import {useMutation, useQueryClient} from 'react-query';
+import {useMutation, useQueryClient , QueryClient} from 'react-query';
 import {makeRequest} from './../../axios';
 
 const Share = () => {
@@ -32,12 +32,13 @@ const Share = () => {
         }
     }
 
-    // adding data and fetching data using react query
+    // adding data and fetching data using react query - this is for the uploading 
+    // share components for the new post
     const mutation = useMutation((newPost) => {
         return makeRequest.post('/posts', newPost);
     }, {
         onSuccess: () => { // Invalidate and refetch
-            queryClient.invalidateQueries(["posts"])
+            queryClient.invalidateQueries(["posts"]);
         }
     })
 
@@ -53,6 +54,7 @@ const Share = () => {
 
 
         // we will use react-query use mutation for creating our post requests
+        // mutation.mutate({desc});
         mutation.mutate({desc, img: imgUrl});
 
         setDesc(null);
@@ -82,6 +84,12 @@ const Share = () => {
                             value={desc}/>
                     </div>
                     <div className="right">
+                        {/* this is to show the image being upload in the share part 
+                            Also create a functionality to not upload or delete the upload 
+                            action of the share and text because once the image is added 
+                            its not going to not upload and you cant just cancel it once 
+                            its been put in upload it can only be replaced
+                        */}
                         {
                         file && <img className="file" alt=""
                             src={
@@ -92,6 +100,8 @@ const Share = () => {
                 <hr/>
                 <div className="bottom">
                     <div className="left">
+                        {/* change this to upload more files / images at the same time , the carousel and the displaying this in the 
+                        posts with the selection of the scroll if there are more than one image scroll if not then don't */}
                         <input type="file" id="file"
                             style={
                                 {display: "none"}
