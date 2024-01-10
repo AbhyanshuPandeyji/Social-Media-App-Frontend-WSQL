@@ -47,9 +47,9 @@ const Login = () => {
                     <h1>Hello World.</h1>
                     <p>
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                                Corporis saepe et eum eveniet repudiandae voluptas, commodi
-                                                rerum vitae officia minus incidunt quo, iure consectetur
-                                                vero eaque, accusantium repellat? Perspiciatis,  officia!
+                        Corporis saepe et eum eveniet repudiandae voluptas, commodi
+                        rerum vitae officia minus incidunt quo, iure consectetur
+                        Svero eaque, accusantium repellat? Perspiciatis,  officia!
                     </p>
                     <span>Do You have and account?</span>
                     <Link to="/register">

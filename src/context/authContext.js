@@ -5,49 +5,51 @@ export const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(
-    // json.parse - to transform string into object
     JSON.parse(localStorage.getItem('user')) || null
+    )
+    // json.parse - to transform string into object
     // null is after the getting item , not inside it ,
     // remember how or work even if first condition is true if the second one is then it will set it to that value
-  )
 
-  const login = async inputs => {
+  const login = async (inputs)=> {
     // TO DO - it will be done by api
     // api return our user info
     // then set our current user
 
     // dummy function to have the user not null
-    setCurrentUser({
-      id: 1,
-      name: 'John Doe',
-      profilePic:
-        'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-    })
+    // setCurrentUser({
+    //   id: 1,
+    //   name: 'John Doe',
+    //   profilePic:
+    //     'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+    // })
 
-    // actual data
-    // const res = await axios.post("http://localhost:8800/api/auth/login" , inputs , {
-    //     // because we are working with cookies if we don't use it we can encounter problems
-    // withCredentials: true,
-    // });
+    // actual data - taking in the data given by the login function on the login page , come back from the backend server on the login page
+    const res = await axios.post("http://localhost:8800/api/auth/login" , inputs , {
+        // because we are working with cookies if we don't use it we can encounter problems
+    withCredentials: true,
+    });
 
-    // setCurrentUser(res.data)
+    setCurrentUser(res.data)
   }
 
+  // before it was true or false
+  // in auth its going to be - include our user info - profile , name etc.
+  // so we cannot write it directly like current user ,we need to transfer it into a string
+  // because it will be an object
+  // but why because you , cannot store object into local storage , it has to be a string ,
+  // json.stringify - to transform string into an object value
+  
   useEffect(() => {
-    // before it was true or false
-    // in auth its going to be - include our user info - profile , name etc.
-    // so we cannot write it directly like current user ,we need to transfer it into a string
-    // because it will be an object
-    // but why because you , cannot store object into local storage , it has to be a string ,
-    // json.stringify - to transform string into an object value
     localStorage.setItem('user', JSON.stringify(currentUser))
-  }, [currentUser])
+  }, [currentUser]);
 
   // after changing current user it will run use effect  , and set user info into local storage
 
   return (
     // current user is a state , and login is a function
 
+    // sending back the current user and the login function to the login page 
     <AuthContext.Provider value={{ currentUser, login }}>
       {children}
     </AuthContext.Provider>

@@ -33,7 +33,7 @@ const LeftBar = () => {
                       it only a temporary or error related to the not logged in user , and not that you 
                       writed something wrong that needs to be fixed , ofcourse unless you writed the login
                       function later wrong then you need to check the login status , and data intake */}
-                        {/* <img src={currentUser.profilePic} alt=""/> */}
+                        <img src={currentUser.profilePic} alt=""/>
                         <span>{currentUser.name}</span>
                     </div>
                     {/* all have image and a span */}

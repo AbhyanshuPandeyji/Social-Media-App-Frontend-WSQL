@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './register.scss'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const Register = () => {
+
+  const navigate = useNavigate();
 
   const [ inputs , setInputs ] = useState({
     username : "",
@@ -15,8 +17,14 @@ const Register = () => {
 
   const [err , setErr] = useState(null) 
 
+
   // on change to change the value of the input - on change method
   const handleChange = (e) =>{
+    // ok so these names are not names these are the attribute part of the html element
+    // the name is identifier and the different value in the attribute to the element is the value
+    // the prev inputs are the inputs in the box  ,and changing those inputs with the current input we are putting in
+    // and the target.value will work on different input boxes and the target.name -> the selecting 
+    // which input box to select will change
     setInputs((prev)=>({
       // taking previous value , targeting the name and 
       // the value associated with the box , and changing value
@@ -31,16 +39,19 @@ const Register = () => {
   // make a register request on click 
   const handleClick = async (e) =>{
 
-    // e.preventDefault()
+    e.preventDefault();
 
-    // try {
-    //   // hitting the url and sending this data of the inputs
-    //   await axios.post("http://localhost:8800/api/auth/register" , inputs);
-    // } catch (err) {
-    //   // this will help us to get our message data from the backend
-    //   // but how they are linking it , what is response , and what is data
-    //   setErr(err.response.data);
-    // }
+    try {
+      // hitting the url and sending this data of the inputs
+      await axios.post("http://localhost:8800/api/auth/register" , inputs);
+      navigate("/");
+    } catch (err) {
+      // this will help us to get our message data from the backend
+      // but how they are linking it , what is response , and what is data
+      setErr(err.response.data);
+    }
+
+    console.log("user Has been logged in");
   }
 
   // console.log(err);

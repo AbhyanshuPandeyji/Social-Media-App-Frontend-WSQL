@@ -12,6 +12,7 @@ import moment from 'moment';
 
 // import AuthContext from '../../context/authContext.js'
 import Comments from '../comments/Comments';
+import { AuthContext } from '../../context/authContext.js';
 
 const Post = ({post}) => {
 
@@ -22,7 +23,7 @@ const Post = ({post}) => {
     // temporary
     const liked = true;
 
-    // const { currentUser } = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
 
 
     return (
@@ -50,10 +51,11 @@ const Post = ({post}) => {
                                     {
                                     post.name
                                 }</span>
-                                {/* post made  */} </Link>
+                                {/* post made  */} 
+                                </Link>
                             <span className='date'>
                                 {
-                                moment(post.createdAt).file
+                                moment(post.createdAt).fromNow()
                             }</span>
                         </div>
                     </div>
@@ -63,11 +65,13 @@ const Post = ({post}) => {
                     <p>{
                         post.desc ? post.desc : ""
                     }</p>
+                    {/* this line is to not just store store but also show the image by 
+                    selecting the same image from the upload folder with the same name */}
                     {
                     post.img ? <img src={
                             "./upload/" + post.img
                         }
-                        alt=""/> : ""
+                        alt="" className="img-Height"/> : ""
                 } </div>
                 <div className="info">
                     <div className="item">
@@ -88,7 +92,8 @@ const Post = ({post}) => {
                         <div className='inputComment'>
                             {/* <img src={currentUser.profilePic} alt="" />
                         <input type="text"  />
-                        <button>Send</button> */} </div>
+                        <button>Send</button>  */}
+                        </div>
                         <TextsmsOutlinedIcon/>
                         12 comment
                     </div>

@@ -32,15 +32,16 @@ function App () {
   // using context api - instead of use state hook to have it work where we want instead of one location specific
   const { darkMode } = useContext(DarkModeContext)
 
-  console.log(darkMode)
+  console.log(darkMode);
 
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
 
   const Layout = () => {
     return (
       // this is to work with react query - for fetching data and working with api request more efficiently than use effect and redux
       // but works generally for if you are ok with api request in single files - because it will still have the all the fetched data into
       // all component because we wrapped app into it
+      // query client provider for the fetching and sending the data between frontend and backend - by react query
       <QueryClientProvider client={queryClient}>
         {/* // to change the background to dark or light , and it will change our text and different things */}
         <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
