@@ -9,21 +9,44 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
+import { QueryClient, useMutation, useQueries, useQuery, useQueryClient } from 'react-query'
+import { makeRequest } from '../../axios.js'
+
 
 // import AuthContext from '../../context/authContext.js'
 import Comments from '../comments/Comments';
 import { AuthContext } from '../../context/authContext.js';
+
+
+
 
 const Post = ({post}) => {
 
 
     const [commentOpen, setCommentOpen] = useState(false)
 
+    const queryClient = useQueryClient();
 
     // temporary
-    const liked = true;
+    // const liked = true;
 
     const { currentUser } = useContext(AuthContext);
+
+
+    // to fetch the likes on the post
+//     const { isLoading, error, data } = useQuery(["likes", post.id ], () =>
+//   // it didn't needed the req - use only what is necessary - the req, res is predefined names 
+//       makeRequest.get("/likes?postId="+post.id).then((res)=>{
+//         return res.data;
+//       })
+      
+//     );
+
+    
+    
+  
+
+    // console.log(data)
 
 
     return (
@@ -76,10 +99,10 @@ const Post = ({post}) => {
                 <div className="info">
                     <div className="item">
                         {/* for like icon we need two icons , which one will be blank and one will be filled */}
-                        {
-                        liked ? <FavoriteOutlinedIcon/>: <FavoriteBorderOutlinedIcon/>
-                    }
-                        12 likes
+                        {/* {
+                        liked ? (<FavoriteOutlinedIcon style={{color : "red"}}/>): <FavoriteBorderOutlinedIcon/>
+                    } */}
+                        {/* {data.length} likes */}
                     </div>
                     {/* for comments we need a modal , to write comment  , which shows comments on the post , view all comments , and to 
                 reply on the specific comment by the user */}
@@ -95,7 +118,8 @@ const Post = ({post}) => {
                         <button>Send</button>  */}
                         </div>
                         <TextsmsOutlinedIcon/>
-                        12 comment
+                           {/* also show number of comments the same way done on other sides */}
+                            comment
                     </div>
                     <div className="item">
                         <ShareOutlinedIcon/>
@@ -105,7 +129,7 @@ const Post = ({post}) => {
                 {/* if comment open is true then go to comments - when we write the state / variable comparison
              with this logical operator it takes it as it should be true - like && , || or !=  */}
                 {
-                commentOpen && <Comments/>
+                commentOpen && <Comments postId={post.id} />
             } </div>
         </div>
     )
