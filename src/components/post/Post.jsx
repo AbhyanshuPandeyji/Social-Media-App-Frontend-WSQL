@@ -9,7 +9,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
-import { QueryClient, useMutation, useQueries, useQuery, useQueryClient } from 'react-query'
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
 import { makeRequest } from '../../axios.js'
 
 
@@ -22,10 +22,11 @@ import { AuthContext } from '../../context/authContext.js';
 
 const Post = ({post}) => {
 
+    
 
     const [commentOpen, setCommentOpen] = useState(false)
 
-    const queryClient = useQueryClient();
+    // const queryClient = useQueryClient();
 
     // temporary
     // const liked = true;
@@ -34,15 +35,22 @@ const Post = ({post}) => {
 
 
     // to fetch the likes on the post
-//     const { isLoading, error, data } = useQuery(["likes", post.id ], () =>
-//   // it didn't needed the req - use only what is necessary - the req, res is predefined names 
-//       makeRequest.get("/likes?postId="+post.id).then((res)=>{
-//         return res.data;
-//       })
-      
-//     );
-
+    const { isLoading, error, data } = useQuery(["likes", post.id], ()=>
+  // it didn't needed the req - use only what is necessary - the req, res is predefined names 
+        makeRequest.get("/likes?postId="+post.id).then((res)=>{
+        return res.data;
+      })
     
+      
+      );
+
+      // use this to avoid loading data before it even comes
+      if (isLoading) return "Loading...";
+      if (error) return "An error has occurred: " + error.message;
+
+    //   console.log()
+    //   console.log(data , typeof data);
+      console.log(data);
     
   
 
@@ -102,7 +110,13 @@ const Post = ({post}) => {
                         {/* {
                         liked ? (<FavoriteOutlinedIcon style={{color : "red"}}/>): <FavoriteBorderOutlinedIcon/>
                     } */}
-                        {/* {data.length} likes */}
+
+
+                    {/* // use the is loading for the data because it is loading the data first before even the data has come and then acutally showing the data which is come from the backend
+                    for start on every part of the app the request using to fetch the data by react query is doing double data load , one time before one time after 
+                    and cant defined that the data should be loaded after the data is been taken from the fetch , so its kind of need to be fixed */}
+                        {/* {isLoading ? "" : `${data.length} likes`} */}
+                        {data.length} likes
                     </div>
                     {/* for comments we need a modal , to write comment  , which shows comments on the post , view all comments , and to 
                 reply on the specific comment by the user */}
