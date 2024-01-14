@@ -32,6 +32,10 @@ const Post = ({post}) => {
     // const liked = true;
 
     const { currentUser } = useContext(AuthContext);
+    
+    const queryClient = useQueryClient();
+
+    
 
 
     // to fetch the likes on the post
@@ -40,21 +44,40 @@ const Post = ({post}) => {
         makeRequest.get("/likes?postId="+post.id).then((res)=>{
         return res.data;
       })
-    
-      
       );
 
-      // use this to avoid loading data before it even comes
-      if (isLoading) return "Loading...";
-      if (error) return "An error has occurred: " + error.message;
-
-    //   console.log()
-    //   console.log(data , typeof data);
-      console.log(data);
-    
-  
+      
+      
+      const mutation = useMutation((liked) => {
+        // to delete the like if already been liked 
+        if(liked) return makeRequest.delete('/likes?postId=' + post.id);
+        // to add like if not been liked the post
+        return makeRequest.post('/likes', {postId : post.id}) ;
+        }, {
+            onSuccess: () => { // Invalidate and refetch , to refresh the like query
+                queryClient.invalidateQueries(["likes"]);
+            }
+        })
+        
+        
+        const handleLike = (e) =>{
+            e.preventDefault();
+            // so we are adding the data into database , while passing the current user id 
+            // there was actually and error here , like was not getting not liked
+            mutation.mutate(data.includes(currentUser.id));
+        }
+        
+        // use this to avoid loading data before it even comes
+        // console.log(data.includes(currentUser.id))
+        if (isLoading) return "Loading...";
+        if (error) return "An error has occurred: " + error.message;
+        
+        //   console.log()
+        //   console.log(data , typeof data);
+        // console.log(data);
 
     // console.log(data)
+    // console.log(data.includes(currentUser.id));
 
 
     return (
@@ -111,13 +134,27 @@ const Post = ({post}) => {
                         liked ? (<FavoriteOutlinedIcon style={{color : "red"}}/>): <FavoriteBorderOutlinedIcon/>
                     } */}
 
-
                     {/* // use the is loading for the data because it is loading the data first before even the data has come and then acutally showing the data which is come from the backend
                     for start on every part of the app the request using to fetch the data by react query is doing double data load , one time before one time after 
                     and cant defined that the data should be loaded after the data is been taken from the fetch , so its kind of need to be fixed */}
                         {/* {isLoading ? "" : `${data.length} likes`} */}
-                        {data.length} likes
+
+                    {/* // actual data with logic */}
+                    {   isLoading ? ("loading...") :  
+                        (data.includes(currentUser.id) ? 
+                        (<FavoriteOutlinedIcon style={{color : "red"}} onClick={handleLike} />)
+                        : (<FavoriteBorderOutlinedIcon onClick={handleLike}/>)
+                        )
+                    }
+
+                    {data.length} likes
+
                     </div>
+
+
+
+
+
                     {/* for comments we need a modal , to write comment  , which shows comments on the post , view all comments , and to 
                 reply on the specific comment by the user */}
                     {/* for that we need another component , which acts as a card / modal to show the data related to specific post , and comment on it */}
