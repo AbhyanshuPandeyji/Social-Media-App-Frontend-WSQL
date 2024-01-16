@@ -26,14 +26,15 @@ import { DarkModeContext } from './context/darkModeContext'
 import { AuthContext } from './context/authContext'
 
 function App () {
-  const { currentUser } = useContext(AuthContext)
   // const currentUser = true;
-
+  
   // using context api - instead of use state hook to have it work where we want instead of one location specific
-  const { darkMode } = useContext(DarkModeContext)
+  const { darkMode } = useContext(DarkModeContext);
+  
+  // console.log(darkMode);
 
-  console.log(darkMode);
-
+  const { currentUser } = useContext(AuthContext)
+  
   const queryClient = new QueryClient();
 
   const Layout = () => {

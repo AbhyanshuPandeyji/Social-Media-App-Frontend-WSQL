@@ -4,7 +4,7 @@ import Post from '../post/Post';
 import { makeRequest } from '../../axios';
 import { useQuery } from 'react-query';
 
-const Posts = () => {
+const Posts = ({userId}) => {
 
   // remember when working / using other component as a card , the data usually will be first taken by the parent component
   // and then that data going to pass to the card , because card handles the single data , and the parent component gets the all data
@@ -69,13 +69,16 @@ const Posts = () => {
   // its acts as same as the reducer of the file and the head of the redux state to differentiate the type of data that is being taken
   const { isLoading, error, data } = useQuery(["posts"], () =>
   // it didn't needed the req - use only what is necessary - the req, res is predefined names 
-      makeRequest.get("/posts").then((res)=>{
+      makeRequest.get("/posts?userId=" + userId).then((res)=>{
         return res.data;
       })
     ); 
   
 
-      console.log(data);
+      // console.log(data);
+      if (isLoading) return "Loading...";
+     if (error) return "An error has occurred: " + error.message;
+
 
   return (
     <div className='posts'>
