@@ -69,7 +69,7 @@ const Posts = ({userId}) => {
   // its acts as same as the reducer of the file and the head of the redux state to differentiate the type of data that is being taken
   const { isLoading, error, data } = useQuery(["posts"], () =>
   // it didn't needed the req - use only what is necessary - the req, res is predefined names 
-      makeRequest.get("/posts?userId=" + userId).then((res)=>{
+      makeRequest.get("/posts?userId="+userId).then((res)=>{
         return res.data;
       })
     ); 
@@ -86,11 +86,11 @@ const Posts = ({userId}) => {
       we need these posts to work like as a card  , and we need to do the same with the stories , where other data are the story cards and not the actual stories */}
       {/* why its not a good idea , because we will have mutilple functionality to it , and if we gonna have it we can't represent the data taken , 
       we also need a place to work on it , thats why we need another component to use the render data and utilize it for different tasks like comment & like */}
-      {error ? "Something Went Wrong!" : (isLoading ? "loading" : 
+      {error ? "Something Went Wrong!" : isLoading ? ("loading") : 
       data.map((post)=>(
         // this is our where we pass our data , to show it in a specific way , work as a card
         <Post  post={post}  key={post.id}/>)
-      ))}
+      )}
       {/* {posts.map((post)=>(
         // this is our where we pass our data , to show it in a specific way , work as a card
         <Post  post={post}  key={post.id}/>)

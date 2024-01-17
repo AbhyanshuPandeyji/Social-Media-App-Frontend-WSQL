@@ -25,6 +25,7 @@ const Post = ({post}) => {
     
 
     const [commentOpen, setCommentOpen] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false)
 
     // const queryClient = useQueryClient();
 
@@ -58,6 +59,16 @@ const Post = ({post}) => {
                 queryClient.invalidateQueries(["likes"]);
             }
         })
+
+      const deleteMutation = useMutation((postId) => {
+        // to delete the like if already been liked 
+        return makeRequest.delete('/posts/'+postId );
+
+        }, {
+            onSuccess: () => { // Invalidate and refetch , to refresh the like query
+                queryClient.invalidateQueries(["posts"]);
+            }
+        })
         
         
         const handleLike = (e) =>{
@@ -67,6 +78,13 @@ const Post = ({post}) => {
             mutation.mutate(data.includes(currentUser.id));
         }
         
+
+        // to delete the post
+        const handleDelete = ()=>{
+            deleteMutation.mutate(post.id)
+        }
+
+
         // use this to avoid loading data before it even comes
         // console.log(data.includes(currentUser.id))
         if (isLoading) return "Loading...";
@@ -113,7 +131,10 @@ const Post = ({post}) => {
                             }</span>
                         </div>
                     </div>
-                    <MoreHorizIcon/>
+                    {/* // this is to change the state of the modal */}
+                    <MoreHorizIcon onClick={()=>setMenuOpen(!menuOpen)} />
+                    {/* // the is to put modal in place by any button , to open a component or a fuctionality */}
+                    {menuOpen && (post.userId === currentUser.id) && (<button onClick={handleDelete}>Delete Post</button>)}
                 </div>
                 <div className="content">
                     <p>{
@@ -123,7 +144,9 @@ const Post = ({post}) => {
                     selecting the same image from the upload folder with the same name */}
                     {
                     post.img ? <img src={
-                            "./upload/" + post.img
+                            "/upload/" + post.img
+                            // the "." before ./ affect from which the file will take the photos
+                            // "./upload/" + post.img
                         }
                         alt="" className="img-Height"/> : ""
                 } </div>

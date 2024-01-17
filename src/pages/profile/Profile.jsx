@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import './profile.scss'
 
 
@@ -24,16 +24,18 @@ import Posts from '../../components/posts/Posts.jsx'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { makeRequest } from '../../axios.js'
 import { useLocation } from 'react-router-dom';
+import Update from '../../components/update/Update.jsx'
 
 
 
 const Profile = () => {
 
   
+  const [openUpdate ,  setOpenUpdate] = useState(false)
 
   const { currentUser } = useContext(AuthContext);
 
-  const userId = parseInt(useLocation().pathname.split("/")[2]);
+  const userId = Number.parseInt(useLocation().pathname.split("/")[2]);
 
   const queryClient = useQueryClient();
 
@@ -58,11 +60,15 @@ const Profile = () => {
   // when to need to change the name of the name of the data coming , we use name : then using another notation for the same data 
   // in here like data : relationshipData , to still access data with a different name to not have name conflict
   const {  isLoading : rIsLoading  , data : relationshipData } = useQuery(["relationship"], ()=>
-  // it didn't needed the req - use only what is necessary - the req, res is predefined names 
   makeRequest.get("/relationships?followedUserId="+ userId).then((res)=>{
     return res.data;
   })
   );
+
+  // // it will show the user id of our user on the user we are following
+  // console.log(relationshipData);
+
+  // it didn't needed the req - use only what is necessary - the req, res is predefined names 
   
 
   // to load the relationship
@@ -79,32 +85,36 @@ const Profile = () => {
     
   
   // Handle Follow 
-  const handleFollow = () =>{
+  const handleFollow = (e) =>{
+    e.preventDefault();
     mutation.mutate(relationshipData.includes(currentUser.id));
 
   }
 
-  // console.log(useLocation().pathname.split("/"[2]))
-    //  console.log(data);
-    //  console.log(relationshipData);
-    //  console.log(typeof(userId));
-
+  // console.log(Number.parseInt(useLocation().pathname.split("/")[2]))
+  
      if (isLoading) return "Loading...";
      if (rIsLoading) return "Loading...";
      if (error) return "An error has occurred: " + error.message;
 
+
+    //  console.log(data);
+    //  console.log(relationshipData);
+    //  console.log(typeof(userId));
+
   return (
         <div className='profile'>
             { isLoading ? ("Loading...") : 
+              ( <Fragment>
               <div className="container">
                 <div className="images">
                     {/* one background image  */}
                     {/* <img src="https://images.pexels.com/photos/884788/pexels-photo-884788.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className='cover' alt="cover"/> {/* one profile image */}
                     {/* <img src="https://images.pexels.com/photos/884788/pexels-photo-884788.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className='cover' alt="cover"/> {/* one profile image */}
                     {/* one background image  */}
-                    <img src={data.coverPic} className='cover' alt="cover"/> 
+                    <img src={"/upload/"+data.coverPic} className='cover' alt="cover"/> 
                     {/* one profile image */}
-                    <img src={data.profilePic} className="profilePic" alt="profilePic"/>
+                    <img src={"/upload/"+data.profilePic} className="profilePic" alt="profilePic"/>
 
                 </div>
                 <div className="profileContainer">
@@ -143,8 +153,8 @@ const Profile = () => {
                           {/* <span>website</span> */}
                           </div>
                         </div>
-                        { rIsLoading ? "Loading..." :  userId === currentUser.id ? 
-                        ( <button>Update</button> ) :
+                        { rIsLoading ? ("Loading...") :  userId === currentUser.id ? 
+                        ( <button onClick={()=>setOpenUpdate(true)} >Update</button> ) :
                           ( <button onClick={handleFollow}>{relationshipData.includes(currentUser.id) ? "Following" : "Follow" }</button> )
                           }
                       </div>
@@ -158,9 +168,14 @@ const Profile = () => {
                   {/* try to create the styling with the global variables where you can to minimize the css files  */}
                 <Posts userId={userId}/>
                 </div>
-            </div>}
+            </div> 
+            </Fragment>)}
+            {/* // here data is acting as the current user data */}
+            {openUpdate && <Update setOpenUpdate={setOpenUpdate}  user={data} /> }
         </div>
     )
 }
+
+
 
 export default Profile;
